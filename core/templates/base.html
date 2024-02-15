@@ -28,9 +28,9 @@
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Categorias <span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="download">
-                <li><a href="{% url "produtos" %}">Notebooks</a></li>
-				<li><a href="{% url "produtos" %}">Acessórios</a></li>
-				<li><a href="{% url "produtos" %}">Celulares</a></li>
+                {% for category in categories %}
+                <li><a href="{% url "catalogo" slug=category.slug %}">{{category.name}}</a></li>
+                {% endfor %}
               </ul>
             </li>
 			<li>
@@ -51,7 +51,7 @@
 			    <ul class="list-unstyled">
 			      <li class="pull-right"><a href="#top">Voltar ao Topo</a></li>
 			      <li><a href="{% url "index" %}">Início</a></li>
-			      <li><a href="{% url "produtos" %}">Produtos</a></li>
+			      <li><a href="{% url "catalogo" %}">Produtos</a></li>
 			      <li><a href="{% url "contato" %}">Contato</a></li>
 			      <li><a href="#">Termos e Privacidade</a></li>
 			    </ul>
@@ -60,6 +60,6 @@
 		</footer>
 	</div>
 	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="assets/bootstrap.min.js"></script>
+    <script src="{% static "assets/bootstrap.min.js" %}"></script>
 </body>
 </html>
