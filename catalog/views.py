@@ -17,3 +17,9 @@ def category(request, slug):
         'current_category': cat
     }
     return render(request, 'catalog/category.html', context)
+
+def product(request, slug_product):
+    context = {
+        'product': Product.objects.get(slug=slug_product),
+    }
+    return render(request, 'catalog/product.html', context)
