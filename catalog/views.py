@@ -27,16 +27,12 @@ class CategoryListView(ListView):
 
 category = CategoryListView.as_view()
 
-# def category(request, slug):
-#     cat = Category.objects.get(slug=slug)
-#     context = {
-#         'products': Product.objects.filter(category=cat),
-#         'current_category': cat
-#     }
-#     return render(request, 'catalog/category.html', context)
 
-def product(request, slug_product):
-    context = {
-        'product': Product.objects.get(slug=slug_product),
-    }
-    return render(request, 'catalog/product.html', context)
+class ProductView(ListView):
+
+    template_name = 'catalog/product.html'
+    context_object_name = 'product'
+    def get_queryset(self):
+        return Product.objects.get(slug=self.kwargs['slug_product'])
+    
+product = ProductView.as_view()
