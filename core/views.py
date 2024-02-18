@@ -1,19 +1,31 @@
+from typing import Any
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.core.mail import send_mail
+from django.views.generic import View, TemplateView
 
 from .forms import ContactForms
-def index(request):
-  return render(request, 'index.html')
+# def index(request):
+#   return render(request, 'index.html')
 
-def contact(request):
-  form = ContactForms(request.POST or None)
-  success = False
-  if form.is_valid():
-    success = True
-  form = ContactForms()
-  context = {
-    'form': form,
-    'success': success
-  }
-  return render(request, 'contact.html', context)
+
+class IndexView(TemplateView): 
+  template_name = 'index.html'
+
+index = IndexView.as_view()
+
+
+class ContactView(View):
+  
+  def __init__(self):
+    self.context = {'success': False, 'form': ContactForms()}
+  
+  def get(self, request):
+    return render(request, 'contact.html', context=self.context)
+  
+  def post(self, request):
+    self.context['form'] = ContactForms(request.POST)
+    if self.context['form'].is_valid():
+      self.context['success'] = True
+    return render(request, 'contact.html', context=self.context)
+
+contact = ContactView.as_view()
